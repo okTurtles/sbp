@@ -30,7 +30,7 @@ sbp('sbp/selectors/register', {
 
 Additional resources:
 
-- :book: **[SBP By Example](docs/sbp-examples.md)** (Developer: start here!)
+- :book: **[SBP By Example](docs/sbp-examples.md)** *(start here!)*
 - :book: **[SBP-based libraries](docs/libraries.md)**
 - :book: **[Apps written using SBP](docs/apps.md)**
 
