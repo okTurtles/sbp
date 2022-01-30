@@ -98,7 +98,7 @@ These languages are surprisingly vague, and it is often the case that misunderst
 
 Wouldn't it be great if these *English intensions* were somehow represented at the very lowest level of our operating systems?
 
-If we could peer into an operating system and see, instead of hexidecimals and symbols like `rs_stired`, `_0x`, `1 ???  (in logd)  load address 0x1006c8000 + 0xef40  [0x1006d6f40]`, we could see exactly what it was doing at any given moment, in English? It would become trivial to monitor what a program was doing, and restrict its behavior at a granular level.
+If we could peer into an operating system and see, instead of hexidecimals and symbols like `rs_stired`, `_0x`, `1 ???  (in logd)  load address 0x1006c8000 + 0xef40  [0x1006d6f40]`, we could see exactly what it _intended to do_ at any given moment, in something resembling English? It would become trivial to monitor a program, and restrict its behavior at a granular level.
 
 ### SBP: Selector-based Programming
 
