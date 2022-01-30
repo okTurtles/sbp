@@ -59,8 +59,6 @@ What has been missing from computers is a *direct link* between human thought, i
 
 This is where the idea of SBP sprang from, and with it, an entirely new way of writing computer software.
 
-A new programming paradigm was born.
-
 ### Problems With Modern Software Programming Paradigms
 
 Writing software today is like building a home where the walls and rooms and floors are constantly shifting.
