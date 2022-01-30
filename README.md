@@ -36,7 +36,7 @@ Additional resources:
 
 ### Backstory
 
-One day I was sitting at a table, wondering how I would go about implementing a security operating system (as one does).
+One day I was sitting at a table, wondering how I would go about implementing a secure operating system (as one does).
 
 I sat, and sat, and sat some more, trying to peer into the *essence* of what security *means*.
 
