@@ -26,7 +26,7 @@ sbp('sbp/selectors/register', {
 
 Additional resources:
 
-- :book: **[Libraries that use SBP](docs/libraries.md)**
+- :book: **[SBP-based libraries](docs/libraries.md)**
 - :book: **[Apps written using SBP](docs/apps.md)**
 
 
