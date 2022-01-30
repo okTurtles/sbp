@@ -94,7 +94,7 @@ We can place restrictions on the allowed system calls. Indeed, that's what thing
 
 We humans do not think in terms of programming languages as we go about our day. We think in terms of spoken and written languages like English.
 
-These languages are surprisingly vague, and it is often the case that misunderstandings occur with them. However, they are how *we* think. We find it much easier to describe in English what we want our programs, *because* of how vague and non-specific these languages are. We can describe in general terms what we expect our code to do.
+These languages are surprisingly vague, and it is often the case that misunderstandings occur with them. However, they are how *we* think. We find it much easier to describe in English what we want from our programs, *because* of how vague and non-specific these languages are. We can describe in general terms what we expect our code to do.
 
 Wouldn't it be great if these *English intensions* were somehow represented at the very lowest level of our operating systems?
 
