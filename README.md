@@ -12,6 +12,12 @@ SBP: Selector-based programming, is a programming paradigm.
 - SBP makes it easier to debug and understand your code
 - SBP makes it possible to create architectures that are remarkably flexible, clean, and safe; this comes from the benefits described above
 
+> "SBP always makes me excited."
+> — Alex Jin
+
+> "I wish I knew about this when I first started programming."
+> - Greg Slepak
+
 ### Core SBP Resources
 
 Installing and using SBP-js is easy:
@@ -28,7 +34,6 @@ Additional resources:
 
 - :book: **[SBP-based libraries](docs/libraries.md)**
 - :book: **[Apps written using SBP](docs/apps.md)**
-
 
 ### Backstory
 
