@@ -14,7 +14,7 @@ SBP: Selector-based programming, is a programming paradigm.
 
 > "SBP always makes me excited." — Alex Jin
 
-> "I wish I knew about this when I first started programming." - Greg Slepak
+> "I wish I knew about this when I first started programming." — Greg Slepak
 
 ### Core SBP Resources
 
