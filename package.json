@@ -1,6 +1,6 @@
 {
   "name": "@sbp/sbp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Selector Basic Programming: JavaScript Edition",
   "main": "dist/main.cjs",
   "type": "module",

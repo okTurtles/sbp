@@ -95,5 +95,6 @@ const SBP_BASE_SELECTORS = {
 }
 
 SBP_BASE_SELECTORS['sbp/selectors/register'](SBP_BASE_SELECTORS)
+sbp('sbp/domains/lock', ['sbp'])
 
 export default sbp

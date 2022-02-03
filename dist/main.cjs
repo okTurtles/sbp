@@ -167,6 +167,7 @@
     }
   };
   SBP_BASE_SELECTORS['sbp/selectors/register'](SBP_BASE_SELECTORS);
+  sbp('sbp/domains/lock', ['sbp']);
   var _default = sbp;
   _exports.default = _default;
 });

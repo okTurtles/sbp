@@ -1,5 +1,9 @@
 # History
 
+#### 1.1.1
+
+- Actually build the previous changes
+
 #### 1.1.0
 
 - Locked the `sbp` domain
