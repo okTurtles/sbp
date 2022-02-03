@@ -20,7 +20,7 @@
     "plugins": ["flowtype"],
     "extends": ["plugin:flowtype/recommended", "standard"]
   },
-  "eslintIgnore": ["dist/*", "node_modules/*", "README.md"],
+  "eslintIgnore": ["dist/*", "node_modules/*", "**/*.md"],
   "devDependencies": {
     "@babel/cli": "7.17.0",
     "@babel/core": "7.17.0",

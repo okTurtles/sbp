@@ -2,9 +2,8 @@
 
 SBP: Selector-based programming, is a programming paradigm for building secure software.
 
-- SBP helps you organize code
-- SBP helps you create code by thinking in terms of namespaces and APIs
-- SBP will make it trivial to secure your code
+- SBP makes it easy to secure your code
+- SBP helps you organize code by thinking in terms of namespaces and APIs
 - SBP makes code inter-operable with other languages, more future-proof, and more portable
 - SBP replaces the need for OOP in many situations
 - SBP is based on message-passing (an idea from Smalltalk) and comes with all of the benefits that message-passing architectures afford

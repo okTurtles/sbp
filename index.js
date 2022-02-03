@@ -41,7 +41,7 @@ const SBP_BASE_SELECTORS = {
   // TODO: implement 'sbp/domains/lock' to prevent further selectors from being registered
   //       for that domain, and to prevent selectors from being overwritten for that domain.
   //       Once a domain is locked it cannot be unlocked.
-  'sbp/selectors/register': function (sels: {[string]: Function}) {
+  'sbp/selectors/register': function (sels: {[string]: Function}): Array<string> {
     const registered = []
     for (const selector in sels) {
       const domain = domainFromSelector(selector)
