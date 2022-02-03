@@ -1,5 +1,9 @@
 # History
 
+#### 0.1.4
+
+- final attempt to fix import warning
+
 #### 0.1.3
 
 - another attempt to get import warning to go away

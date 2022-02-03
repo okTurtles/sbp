@@ -1,17 +1,17 @@
 {
   "name": "sbp-js",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Selector Basic Programming: JavaScript edition",
-  "main": "dist/main.js",
-  "module": "dist/module.js",
+  "main": "dist/main.cjs",
+  "type": "module",
   "exports": {
-    "import": "./dist/module.js",
-    "require": "./dist/main.js"
+    "import": "./dist/module.mjs",
+    "require": "./dist/main.cjs"
   },
   "homepage": "https://github.com/okTurtles/sbp-js/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel index.js --out-dir dist && flow-remove-types -p -o dist/module.js index.js",
+    "build": "babel index.js --out-file dist/main.cjs && flow-remove-types -p -o dist/module.mjs index.js",
     "flow": "flow",
     "lint": "eslint",
     "clean": "rm -f dist/*"
