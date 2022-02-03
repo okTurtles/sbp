@@ -17,10 +17,10 @@ SBP: Selector-based programming, is a programming paradigm for building secure s
 
 ### Core SBP Resources
 
-Installing and using SBP-js is easy:
+Installing and using SBP is easy:
 
 ```js
-import sbp from 'sbp-js'
+import sbp from '@sbp/sbp'
 
 sbp('sbp/selectors/register', {
   'my-domain/my-great-selector': function () {
@@ -32,7 +32,7 @@ sbp('sbp/selectors/register', {
 sbp('my-domain/my-great-selector') // prints "hello!"
 ```
 
-SBP-js is **tiny** (about 80 lines, unminified, and zero dependencies).
+SBP is **tiny** (about 80 lines, unminified, and zero dependencies).
 
 The core `sbp` function is only about 12 lines, and yet the impact of these 12 lines is profound.
 
