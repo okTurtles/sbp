@@ -10,14 +10,16 @@ SBP has 3 core concepts:
 
 This file will covering everything, including all built-in selectors, as well as the per-domain selectors that are created for you, of which there is currently only one: `_init`.
 
-- `'sbp/selectors/register'` (required)
-- `'sbp/selectors/unregister'`
-- `'sbp/selectors/overwrite'`
-- `'sbp/domains/lock'`
-- `'sbp/selectors/fn'`
-- `'sbp/filters/global/add'` (required)
-- `'sbp/filters/domain/add'`
-- `'sbp/filters/selector/add'`
+- [`'sbp/selectors/register'`](#sbpselectorsregister) (required)
+- [`'sbp/selectors/unregister'`](#sbpselectorsunregister)
+- [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite)
+- [`'sbp/selectors/fn'`](#sbpselectorsfn)
+- [`'sbp/domains/lock'`](#sbpdomainslock)
+- [`'sbp/filters/global/add'`](#sbpfiltersglobaladd) (required)
+- [`'sbp/filters/domain/add'`](#sbpfiltersdomainadd)
+- [`'sbp/filters/selector/add'`](#sbpfiltersselectoradd)
+
+## Core API
 
 ### `'sbp/selectors/register'`
 
@@ -77,17 +79,17 @@ if (production || process.env.GI_PERSIST) {
 }
 ```
 
-### `'sbp/domains/lock'`
-
-- Function signature: `function (doms: [string])`
-
-Prevents selectors in the given domain(s) from being overwritten or unregistered.
-
 ### `'sbp/selectors/fn'`
 
 - Function signature: `function (sel: string): Function`
 
 Returns the function bound to the given selector.
+
+### `'sbp/domains/lock'`
+
+- Function signature: `function (doms: [string])`
+
+Prevents selectors in the given domain(s) from being overwritten or unregistered.
 
 ### `'sbp/filters/global/add'`
 
