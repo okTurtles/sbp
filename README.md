@@ -41,7 +41,7 @@ Additional resources:
 - :book: **[SBP Core API](docs/sbp-api.md)**
 - :book: **[SBP-based libraries](docs/libraries.md)**
 - :book: **[Apps written using SBP](docs/apps.md)**
-- :book: **[SBP Language Support](docs/languages.md)**
+- :book: **[SBP Language Support](docs/language-support.md)**
 
 ### Backstory
 
