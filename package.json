@@ -1,9 +1,13 @@
 {
   "name": "sbp-js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Selector Basic Programming: JavaScript edition",
   "main": "dist/main.js",
   "module": "dist/module.js",
+  "exports": {
+    "import": "./dist/module.js",
+    "require": "./dist/main.js"
+  },
   "homepage": "https://github.com/okTurtles/sbp-js/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

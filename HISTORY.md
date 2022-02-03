@@ -1,5 +1,9 @@
 # History
 
+#### 0.1.3
+
+- another attempt to get import warning to go away
+
 #### 0.1.2
 
 - added `dist/module.js` and `"module"` to `package.json`
