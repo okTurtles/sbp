@@ -1,5 +1,9 @@
 # History
 
+#### 0.1.2
+
+- added `dist/module.js` and `"module"` to `package.json`
+
 #### 0.1.1
 
 - implemented 'sbp/domains/lock'

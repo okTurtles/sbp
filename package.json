@@ -1,12 +1,13 @@
 {
   "name": "sbp-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Selector Basic Programming: JavaScript edition",
   "main": "dist/main.js",
+  "module": "dist/module.js",
   "homepage": "https://github.com/okTurtles/sbp-js/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel index.js --out-dir dist",
+    "build": "babel index.js --out-dir dist && flow-remove-types -p -o dist/module.js index.js",
     "flow": "flow",
     "lint": "eslint",
     "clean": "rm -f dist/*"
@@ -17,10 +18,19 @@
   "eslintConfig": {
     "root": true,
     "parser": "@babel/eslint-parser",
-    "plugins": ["flowtype"],
-    "extends": ["plugin:flowtype/recommended", "standard"]
+    "plugins": [
+      "flowtype"
+    ],
+    "extends": [
+      "plugin:flowtype/recommended",
+      "standard"
+    ]
   },
-  "eslintIgnore": ["dist/*", "node_modules/*", "**/*.md"],
+  "eslintIgnore": [
+    "dist/*",
+    "node_modules/*",
+    "**/*.md"
+  ],
   "devDependencies": {
     "@babel/cli": "7.17.0",
     "@babel/core": "7.17.0",
@@ -29,6 +39,7 @@
     "@babel/preset-flow": "7.16.7",
     "eslint-config-standard": "17.0.0-0",
     "eslint-plugin-flowtype": "8.0.3",
-    "flow-bin": "0.170.0"
+    "flow-bin": "0.170.0",
+    "flow-remove-types": "2.171.0"
   }
 }
