@@ -1,12 +1,34 @@
 {
   "name": "sbp-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Selector Basic Programming: JavaScript edition",
-  "main": "index.js",
+  "main": "dist/main.js",
   "homepage": "https://github.com/okTurtles/sbp-js/",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel index.js --out-dir dist",
+    "flow": "flow",
+    "lint": "eslint",
+    "clean": "rm -f dist/*"
   },
+  "browserslist": "> 0.25% and not dead",
   "author": "Greg Slepak",
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "eslintConfig": {
+    "root": true,
+    "parser": "@babel/eslint-parser",
+    "plugins": ["flowtype"],
+    "extends": ["plugin:flowtype/recommended", "standard"]
+  },
+  "eslintIgnore": ["dist/*", "node_modules/*"],
+  "devDependencies": {
+    "@babel/cli": "7.17.0",
+    "@babel/core": "7.17.0",
+    "@babel/eslint-parser": "7.17.0",
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-flow": "7.16.7",
+    "eslint-config-standard": "17.0.0-0",
+    "eslint-plugin-flowtype": "8.0.3",
+    "flow-bin": "0.170.0"
+  }
 }

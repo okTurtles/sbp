@@ -1,3 +1,5 @@
+// @flow
+
 'use strict'
 
 type TypeFilter = (domain: string, selector: string, data: any) => ?boolean
