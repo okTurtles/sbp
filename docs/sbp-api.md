@@ -1,4 +1,4 @@
-# SBP By Example
+# SBP API
 
 SBP is remarkably simple (only about 77 lines or so), but it does have a bit of depth that's worth covering.
 

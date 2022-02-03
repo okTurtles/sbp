@@ -17,6 +17,7 @@
     value: true
   });
   _exports.default = void 0;
+  _exports.domainFromSelector = domainFromSelector;
 
   function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
@@ -34,14 +35,13 @@
   function sbp(selector) {
     var _selectors$selector;
 
-    var domainLookup = DOMAIN_REGEX.exec(selector);
+    var domain = domainFromSelector(selector);
 
-    if (!domainLookup || !selectors[selector]) {
+    if (!selectors[selector]) {
       throw new Error("SBP: selector not registered: ".concat(selector));
-    }
-
-    var domain = domainLookup[0]; // Filters can perform additional functions, and by returning `false` they
+    } // Filters can perform additional functions, and by returning `false` they
     // can prevent the execution of a selector. Check the most specific filters first.
+
 
     for (var _len = arguments.length, data = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       data[_key - 1] = arguments[_key];
@@ -70,6 +70,16 @@
     return (_selectors$selector = selectors[selector]).call.apply(_selectors$selector, [domains[domain].state].concat(data));
   }
 
+  function domainFromSelector(selector) {
+    var domainLookup = DOMAIN_REGEX.exec(selector);
+
+    if (domainLookup === null) {
+      throw new Error("SBP: selector missing domain: ".concat(selector));
+    }
+
+    return domainLookup[0];
+  }
+
   var SBP_BASE_SELECTORS = {
     // TODO: implement 'sbp/domains/lock' to prevent further selectors from being registered
     //       for that domain, and to prevent selectors from being overwritten for that domain.
@@ -78,13 +88,7 @@
       var registered = [];
 
       for (var _selector in sels) {
-        var domainLookup = DOMAIN_REGEX.exec(_selector);
-
-        if (domainLookup === null) {
-          throw new Error("SBP: selector missing domain: ".concat(_selector));
-        }
-
-        var _domain = domainLookup[0];
+        var _domain = domainFromSelector(_selector);
 
         if (selectors[_selector]) {
           (console.warn || console.log)("[SBP WARN]: not registering already registered selector: ".concat(_selector));
@@ -115,6 +119,11 @@
       try {
         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var _selector2 = _step2.value;
+
+          if (domains[domainFromSelector(_selector2)].locked) {
+            throw new Error("SBP: domain locked for: ".concat(_selector2));
+          }
+
           delete selectors[_selector2];
         }
       } catch (err) {
@@ -126,6 +135,21 @@
     'sbp/selectors/overwrite': function sbpSelectorsOverwrite(sels) {
       sbp('sbp/selectors/unregister', Object.keys(sels));
       return sbp('sbp/selectors/register', sels);
+    },
+    'sbp/domains/lock': function sbpDomainsLock(doms) {
+      var _iterator3 = _createForOfIteratorHelper(doms),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _domain2 = _step3.value;
+          domains[_domain2].locked = true;
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
     },
     'sbp/selectors/fn': function sbpSelectorsFn(sel) {
       return selectors[sel];

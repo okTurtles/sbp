@@ -13,11 +13,10 @@ const selectorFilters: {[string]: Array<TypeFilter>} = {}
 const DOMAIN_REGEX = /^[^/]+/
 
 function sbp (selector: string, ...data: any): any {
-  const domainLookup = DOMAIN_REGEX.exec(selector)
-  if (!domainLookup || !selectors[selector]) {
+  const domain = domainFromSelector(selector)
+  if (!selectors[selector]) {
     throw new Error(`SBP: selector not registered: ${selector}`)
   }
-  const domain = domainLookup[0]
   // Filters can perform additional functions, and by returning `false` they
   // can prevent the execution of a selector. Check the most specific filters first.
   for (const filters of [selectorFilters[selector], domainFilters[domain], globalFilters]) {
@@ -30,6 +29,14 @@ function sbp (selector: string, ...data: any): any {
   return selectors[selector].call(domains[domain].state, ...data)
 }
 
+export function domainFromSelector (selector: string): string {
+  const domainLookup = DOMAIN_REGEX.exec(selector)
+  if (domainLookup === null) {
+    throw new Error(`SBP: selector missing domain: ${selector}`)
+  }
+  return domainLookup[0]
+}
+
 const SBP_BASE_SELECTORS = {
   // TODO: implement 'sbp/domains/lock' to prevent further selectors from being registered
   //       for that domain, and to prevent selectors from being overwritten for that domain.
@@ -37,11 +44,7 @@ const SBP_BASE_SELECTORS = {
   'sbp/selectors/register': function (sels: {[string]: Function}) {
     const registered = []
     for (const selector in sels) {
-      const domainLookup = DOMAIN_REGEX.exec(selector)
-      if (domainLookup === null) {
-        throw new Error(`SBP: selector missing domain: ${selector}`)
-      }
-      const domain = domainLookup[0]
+      const domain = domainFromSelector(selector)
       if (selectors[selector]) {
         (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: ${selector}`)
       } else if (typeof sels[selector] === 'function') {
@@ -61,12 +64,20 @@ const SBP_BASE_SELECTORS = {
   },
   'sbp/selectors/unregister': function (sels: [string]) {
     for (const selector of sels) {
+      if (domains[domainFromSelector(selector)].locked) {
+        throw new Error(`SBP: domain locked for: ${selector}`)
+      }
       delete selectors[selector]
     }
   },
   'sbp/selectors/overwrite': function (sels: {[string]: Function}) {
     sbp('sbp/selectors/unregister', Object.keys(sels))
     return sbp('sbp/selectors/register', sels)
+  },
+  'sbp/domains/lock': function (doms: [string]) {
+    for (const domain of doms) {
+      domains[domain].locked = true
+    }
   },
   'sbp/selectors/fn': function (sel: string): Function {
     return selectors[sel]

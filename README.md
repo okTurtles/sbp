@@ -1,12 +1,12 @@
 # SBP: A Programming Paradigm for Building Secure Software and Operating Systems
 
-SBP: Selector-based programming, is a programming paradigm.
+SBP: Selector-based programming, is a programming paradigm for building secure software.
 
 - SBP helps you organize code
 - SBP helps you create code by thinking in terms of namespaces and APIs
 - SBP will make it trivial to secure your code
 - SBP makes code inter-operable with other languages, more future-proof, and more portable
-- SBP replaces the need for OOP
+- SBP replaces the need for OOP in many situations
 - SBP is based on message-passing (an idea from Smalltalk) and comes with all of the benefits that message-passing architectures afford
 - SBP embraces the LISP idea that `code = data` and gives you all of the benefits and possibilities that affords
 - SBP makes it easier to debug and understand your code
@@ -24,15 +24,25 @@ Installing and using SBP-js is easy:
 import sbp from 'sbp-js'
 
 sbp('sbp/selectors/register', {
-  // ... your selectors here
+  'my-domain/my-great-selector': function () {
+    console.log('hello!')
+  }
 })
+
+// call your selector
+sbp('my-domain/my-great-selector') // prints "hello!"
 ```
+
+SBP-js is **tiny** (about 80 lines, unminified, and zero dependencies).
+
+The core `sbp` function is only about 12 lines, and yet the impact of these 12 lines is profound.
 
 Additional resources:
 
-- :book: **[SBP By Example](docs/sbp-examples.md)**
+- :book: **[SBP Core API](docs/sbp-api.md)**
 - :book: **[SBP-based libraries](docs/libraries.md)**
 - :book: **[Apps written using SBP](docs/apps.md)**
+- :book: **[SBP Language Support](docs/languages.md)**
 
 ### Backstory
 
@@ -201,3 +211,12 @@ But seriously, you can do stuff with SBP that you couldn't really do in the lang
 
 - We can do something much more down-to-Earth, like design our entire app in terms of human-readable APIs that call each other, and won't change on us in the future. Once these strings are defined, that's it, they're usually defined for life, and even if they change, because the strings are so long, the semantic intention behind them is preserved across time, without name conflicts. Once the APIs have been defined, it becomes a much easier task to fill in the implementation. Instead of thinking about types, or classes, or objects, we think about what we want the program to do — in English — write that, and then worry about the details.
 
+## History
+
+See [HISTORY.md](HISTORY.md).
+
+## License
+
+AGPL-3.0.
+
+See [LICENSE.txt](LICENSE.txt).

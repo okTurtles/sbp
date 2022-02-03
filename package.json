@@ -1,6 +1,6 @@
 {
   "name": "sbp-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Selector Basic Programming: JavaScript edition",
   "main": "dist/main.js",
   "homepage": "https://github.com/okTurtles/sbp-js/",
@@ -20,7 +20,7 @@
     "plugins": ["flowtype"],
     "extends": ["plugin:flowtype/recommended", "standard"]
   },
-  "eslintIgnore": ["dist/*", "node_modules/*"],
+  "eslintIgnore": ["dist/*", "node_modules/*", "README.md"],
   "devDependencies": {
     "@babel/cli": "7.17.0",
     "@babel/core": "7.17.0",
