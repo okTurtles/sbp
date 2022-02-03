@@ -5,3 +5,5 @@
 - [`okTurtles.eventQueue`](https://github.com/okTurtles/okTurtles.eventQueue) - A serial event queue for SBP invocations
 
 For JavaScript libraries published to NPM, please use the `@sbp/` prefix in the package name.
+
+_Feel free to add yours here via a PR!_
