@@ -1,5 +1,9 @@
 # History
 
+#### 1.1.0
+
+- Locked the `sbp` domain
+
 #### 1.0.0
 
 - Bump version to fix confusion caused by moving to scoped NPM package. This version is identical to the previous one.
