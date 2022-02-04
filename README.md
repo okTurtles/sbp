@@ -216,4 +216,4 @@ See [HISTORY.md](HISTORY.md).
 
 ## License
 
-[MIT.](LICENSE.txt).
+[MIT](LICENSE.txt).
