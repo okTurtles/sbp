@@ -61,8 +61,8 @@ const SBP_BASE_SELECTORS = {
   },
   'sbp/selectors/unregister': function (sels) {
     for (const selector of sels) {
-      if (unsafeSelectors[selector]) {
-        throw new Error(`SBP: can't unregister, selector is locked: ${selector}`)
+      if (!unsafeSelectors[selector]) {
+        throw new Error(`SBP: can't unregister locked selector: ${selector}`)
       }
       delete selectors[selector]
     }

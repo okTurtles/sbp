@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "16"
+branches:
+  only:
+    - master # https://github.com/okTurtles/group-income-simple/issues/58
+install:
+  - npm ci
+script:
+  - npm test

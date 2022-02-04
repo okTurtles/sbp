@@ -117,8 +117,8 @@
         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var _selector2 = _step2.value;
 
-          if (unsafeSelectors[_selector2]) {
-            throw new Error("SBP: can't unregister, selector is locked: ".concat(_selector2));
+          if (!unsafeSelectors[_selector2]) {
+            throw new Error("SBP: can't unregister locked selector: ".concat(_selector2));
           }
 
           delete selectors[_selector2];

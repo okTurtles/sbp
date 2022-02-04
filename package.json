@@ -1,6 +1,6 @@
 {
   "name": "@sbp/sbp",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Selector Basic Programming: JavaScript Edition",
   "main": "dist/main.cjs",
   "type": "module",
@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/okTurtles/sbp-js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require @babel/register -R spec *.test.js",
     "build": "babel index.js -o dist/main.cjs && flow-remove-types -p -o dist/module.mjs index.js",
     "flow": "flow",
     "lint": "eslint",
@@ -41,9 +41,14 @@
     "@babel/eslint-parser": "7.17.0",
     "@babel/preset-env": "7.16.11",
     "@babel/preset-flow": "7.16.7",
+    "@babel/register": "7.17.0",
     "eslint-config-standard": "17.0.0-0",
     "eslint-plugin-flowtype": "8.0.3",
     "flow-bin": "0.170.0",
-    "flow-remove-types": "2.171.0"
+    "flow-remove-types": "2.171.0",
+    "mocha": "9.2.0",
+    "should": "13.2.3",
+    "should-sinon": "0.0.6",
+    "sinon": "13.0.1"
   }
 }

@@ -1,5 +1,9 @@
 # History
 
+#### 2.1.0
+
+- Remembered to build 2.0.0 this time and added some tests
+
 #### 2.0.0
 
 - Selectors are locked by default. Use `'sbp/selectors/unsafe'` before registering selectors that you intend to overwrite.
