@@ -1,5 +1,9 @@
 # History
 
+#### 2.1.1
+
+- reduced size of `dist/main.cjs` by updating `"browserslist"`
+
 #### 2.1.0
 
 - Remembered to build 2.0.0 this time and added some tests

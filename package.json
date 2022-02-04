@@ -1,6 +1,6 @@
 {
   "name": "@sbp/sbp",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Selector Basic Programming: JavaScript Edition",
   "main": "dist/main.cjs",
   "type": "module",
@@ -16,7 +16,7 @@
     "lint": "eslint",
     "clean": "rm -f dist/*"
   },
-  "browserslist": "> 0.25% and not dead",
+  "browserslist": "> 0.25% and not dead and since 2020",
   "author": "Greg Slepak",
   "license": "MIT",
   "eslintConfig": {

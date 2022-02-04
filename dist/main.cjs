@@ -18,28 +18,19 @@
   });
   _exports.default = void 0;
   _exports.domainFromSelector = domainFromSelector;
-
-  function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-  function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-  var selectors = {};
-  var domains = {};
-  var globalFilters = [];
-  var domainFilters = {};
-  var selectorFilters = {};
-  var unsafeSelectors = {};
-  var DOMAIN_REGEX = /^[^/]+/;
+  const selectors = {};
+  const domains = {};
+  const globalFilters = [];
+  const domainFilters = {};
+  const selectorFilters = {};
+  const unsafeSelectors = {};
+  const DOMAIN_REGEX = /^[^/]+/;
 
   function sbp(selector) {
-    var _selectors$selector;
-
-    var domain = domainFromSelector(selector);
+    const domain = domainFromSelector(selector);
 
     if (!selectors[selector]) {
-      throw new Error("SBP: selector not registered: ".concat(selector));
+      throw new Error(`SBP: selector not registered: ${selector}`);
     } // Filters can perform additional functions, and by returning `false` they
     // can prevent the execution of a selector. Check the most specific filters first.
 
@@ -48,112 +39,89 @@
       data[_key - 1] = arguments[_key];
     }
 
-    for (var _i = 0, _arr = [selectorFilters[selector], domainFilters[domain], globalFilters]; _i < _arr.length; _i++) {
-      var filters = _arr[_i];
-
+    for (const filters of [selectorFilters[selector], domainFilters[domain], globalFilters]) {
       if (filters) {
-        var _iterator = _createForOfIteratorHelper(filters),
-            _step;
-
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var filter = _step.value;
-            if (filter(domain, selector, data) === false) return;
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
+        for (const filter of filters) {
+          if (filter(domain, selector, data) === false) return;
         }
       }
     }
 
-    return (_selectors$selector = selectors[selector]).call.apply(_selectors$selector, [domains[domain].state].concat(data));
+    return selectors[selector].call(domains[domain].state, ...data);
   }
 
   function domainFromSelector(selector) {
-    var domainLookup = DOMAIN_REGEX.exec(selector);
+    const domainLookup = DOMAIN_REGEX.exec(selector);
 
     if (domainLookup === null) {
-      throw new Error("SBP: selector missing domain: ".concat(selector));
+      throw new Error(`SBP: selector missing domain: ${selector}`);
     }
 
     return domainLookup[0];
   }
 
-  var SBP_BASE_SELECTORS = {
-    'sbp/selectors/register': function sbpSelectorsRegister(sels) {
-      var registered = [];
+  const SBP_BASE_SELECTORS = {
+    'sbp/selectors/register': function (sels) {
+      const registered = [];
 
-      for (var _selector in sels) {
-        var _domain = domainFromSelector(_selector);
+      for (const selector in sels) {
+        const domain = domainFromSelector(selector);
 
-        if (selectors[_selector]) {
-          (console.warn || console.log)("[SBP WARN]: not registering already registered selector: ".concat(_selector));
-        } else if (typeof sels[_selector] === 'function') {
-          var fn = selectors[_selector] = sels[_selector];
-          registered.push(_selector); // ensure each domain has a domain state associated with it
+        if (selectors[selector]) {
+          (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: ${selector}`);
+        } else if (typeof sels[selector] === 'function') {
+          const fn = selectors[selector] = sels[selector];
+          registered.push(selector); // ensure each domain has a domain state associated with it
 
-          if (!domains[_domain]) {
-            domains[_domain] = {
+          if (!domains[domain]) {
+            domains[domain] = {
               state: {}
             };
           } // call the special _init function immediately upon registering
 
 
-          if (_selector === "".concat(_domain, "/_init")) {
-            fn.call(domains[_domain].state);
+          if (selector === `${domain}/_init`) {
+            fn.call(domains[domain].state);
           }
         }
       }
 
       return registered;
     },
-    'sbp/selectors/unregister': function sbpSelectorsUnregister(sels) {
-      var _iterator2 = _createForOfIteratorHelper(sels),
-          _step2;
-
-      try {
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          var _selector2 = _step2.value;
-
-          if (!unsafeSelectors[_selector2]) {
-            throw new Error("SBP: can't unregister locked selector: ".concat(_selector2));
-          }
-
-          delete selectors[_selector2];
+    'sbp/selectors/unregister': function (sels) {
+      for (const selector of sels) {
+        if (!unsafeSelectors[selector]) {
+          throw new Error(`SBP: can't unregister locked selector: ${selector}`);
         }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
+
+        delete selectors[selector];
       }
     },
-    'sbp/selectors/overwrite': function sbpSelectorsOverwrite(sels) {
+    'sbp/selectors/overwrite': function (sels) {
       sbp('sbp/selectors/unregister', Object.keys(sels));
       return sbp('sbp/selectors/register', sels);
     },
-    'sbp/selectors/unsafe': function sbpSelectorsUnsafe(sels) {
+    'sbp/selectors/unsafe': function (sels) {
       if (Object.keys(domains).length > 1) {
         // 1 because 'sbp' is registered first thing
         throw new Error('must be called before registering any selectors');
       }
 
-      sels.forEach(function (s) {
+      sels.forEach(s => {
         unsafeSelectors[s] = true;
       });
     },
-    'sbp/selectors/fn': function sbpSelectorsFn(sel) {
+    'sbp/selectors/fn': function (sel) {
       return selectors[sel];
     },
-    'sbp/filters/global/add': function sbpFiltersGlobalAdd(filter) {
+    'sbp/filters/global/add': function (filter) {
       globalFilters.push(filter);
     },
-    'sbp/filters/domain/add': function sbpFiltersDomainAdd(domain, filter) {
+    'sbp/filters/domain/add': function (domain, filter) {
       if (!domainFilters[domain]) domainFilters[domain] = [];
       domainFilters[domain].push(filter);
     },
-    'sbp/filters/selector/add': function sbpFiltersSelectorAdd(selector, filter) {
+    'sbp/filters/selector/add': function (selector, filter) {
       if (!selectorFilters[selector]) selectorFilters[selector] = [];
       selectorFilters[selector].push(filter);
     }
