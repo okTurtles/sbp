@@ -133,7 +133,7 @@ The JavaScript SBP library comes with 8 predefined core selectors, of which only
 - `'sbp/selectors/unregister'`
 - `'sbp/selectors/overwrite'`
 - `'sbp/selectors/fn'`
-- `'sbp/domains/lock'`
+- `'sbp/selectors/unsafe'`
 - `'sbp/filters/global/add'` (required)
 - `'sbp/filters/domain/add'`
 - `'sbp/filters/selector/add'`
@@ -216,6 +216,4 @@ See [HISTORY.md](HISTORY.md).
 
 ## License
 
-AGPL-3.0.
-
-See [LICENSE.txt](LICENSE.txt).
+[MIT.](LICENSE.txt).

@@ -8,6 +8,7 @@ const domains = {}
 const globalFilters = []
 const domainFilters = {}
 const selectorFilters = {}
+const unsafeSelectors = {}
 
 const DOMAIN_REGEX = /^[^/]+/
 
@@ -37,9 +38,6 @@ export function domainFromSelector (selector) {
 }
 
 const SBP_BASE_SELECTORS = {
-  // TODO: implement 'sbp/domains/lock' to prevent further selectors from being registered
-  //       for that domain, and to prevent selectors from being overwritten for that domain.
-  //       Once a domain is locked it cannot be unlocked.
   'sbp/selectors/register': function (sels) {
     const registered = []
     for (const selector in sels) {
@@ -51,7 +49,7 @@ const SBP_BASE_SELECTORS = {
         registered.push(selector)
         // ensure each domain has a domain state associated with it
         if (!domains[domain]) {
-          domains[domain] = { state: {}, locked: false }
+          domains[domain] = { state: {} }
         }
         // call the special _init function immediately upon registering
         if (selector === `${domain}/_init`) {
@@ -63,8 +61,8 @@ const SBP_BASE_SELECTORS = {
   },
   'sbp/selectors/unregister': function (sels) {
     for (const selector of sels) {
-      if (domains[domainFromSelector(selector)].locked) {
-        throw new Error(`SBP: domain locked for: ${selector}`)
+      if (unsafeSelectors[selector]) {
+        throw new Error(`SBP: can't unregister, selector is locked: ${selector}`)
       }
       delete selectors[selector]
     }
@@ -73,10 +71,11 @@ const SBP_BASE_SELECTORS = {
     sbp('sbp/selectors/unregister', Object.keys(sels))
     return sbp('sbp/selectors/register', sels)
   },
-  'sbp/domains/lock': function (doms) {
-    for (const domain of doms) {
-      domains[domain].locked = true
+  'sbp/selectors/unsafe': function (sels) {
+    if (Object.keys(domains).length > 1) { // 1 because 'sbp' is registered first thing
+      throw new Error('must be called before registering any selectors')
     }
+    sels.forEach(s => { unsafeSelectors[s] = true })
   },
   'sbp/selectors/fn': function (sel) {
     return selectors[sel]
@@ -95,6 +94,5 @@ const SBP_BASE_SELECTORS = {
 }
 
 SBP_BASE_SELECTORS['sbp/selectors/register'](SBP_BASE_SELECTORS)
-sbp('sbp/domains/lock', ['sbp'])
 
 export default sbp

@@ -30,6 +30,7 @@
   var globalFilters = [];
   var domainFilters = {};
   var selectorFilters = {};
+  var unsafeSelectors = {};
   var DOMAIN_REGEX = /^[^/]+/;
 
   function sbp(selector) {
@@ -81,9 +82,6 @@
   }
 
   var SBP_BASE_SELECTORS = {
-    // TODO: implement 'sbp/domains/lock' to prevent further selectors from being registered
-    //       for that domain, and to prevent selectors from being overwritten for that domain.
-    //       Once a domain is locked it cannot be unlocked.
     'sbp/selectors/register': function sbpSelectorsRegister(sels) {
       var registered = [];
 
@@ -98,8 +96,7 @@
 
           if (!domains[_domain]) {
             domains[_domain] = {
-              state: {},
-              locked: false
+              state: {}
             };
           } // call the special _init function immediately upon registering
 
@@ -120,8 +117,8 @@
         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var _selector2 = _step2.value;
 
-          if (domains[domainFromSelector(_selector2)].locked) {
-            throw new Error("SBP: domain locked for: ".concat(_selector2));
+          if (unsafeSelectors[_selector2]) {
+            throw new Error("SBP: can't unregister, selector is locked: ".concat(_selector2));
           }
 
           delete selectors[_selector2];
@@ -136,20 +133,15 @@
       sbp('sbp/selectors/unregister', Object.keys(sels));
       return sbp('sbp/selectors/register', sels);
     },
-    'sbp/domains/lock': function sbpDomainsLock(doms) {
-      var _iterator3 = _createForOfIteratorHelper(doms),
-          _step3;
-
-      try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var _domain2 = _step3.value;
-          domains[_domain2].locked = true;
-        }
-      } catch (err) {
-        _iterator3.e(err);
-      } finally {
-        _iterator3.f();
+    'sbp/selectors/unsafe': function sbpSelectorsUnsafe(sels) {
+      if (Object.keys(domains).length > 1) {
+        // 1 because 'sbp' is registered first thing
+        throw new Error('must be called before registering any selectors');
       }
+
+      sels.forEach(function (s) {
+        unsafeSelectors[s] = true;
+      });
     },
     'sbp/selectors/fn': function sbpSelectorsFn(sel) {
       return selectors[sel];
@@ -167,7 +159,6 @@
     }
   };
   SBP_BASE_SELECTORS['sbp/selectors/register'](SBP_BASE_SELECTORS);
-  sbp('sbp/domains/lock', ['sbp']);
   var _default = sbp;
   _exports.default = _default;
 });

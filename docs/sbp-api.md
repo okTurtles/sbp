@@ -14,7 +14,7 @@ This file will covering everything, including all built-in selectors, as well as
 - [`'sbp/selectors/unregister'`](#sbpselectorsunregister)
 - [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite)
 - [`'sbp/selectors/fn'`](#sbpselectorsfn)
-- [`'sbp/domains/lock'`](#sbpdomainslock)
+- [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe)
 - [`'sbp/filters/global/add'`](#sbpfiltersglobaladd) (required)
 - [`'sbp/filters/domain/add'`](#sbpfiltersdomainadd)
 - [`'sbp/filters/selector/add'`](#sbpfiltersselectoradd)
@@ -52,7 +52,7 @@ await sbp('mydomain/async-action') // waits on the database to load
 
 - Function signature: `function (sels: [string])`
 
-Allows you to unregister any previously registered selectors, unless they're part of a domain locked by `'sbp/domains/lock'`.
+Allows you to unregister selectors that were [marked unsafe](#sbpselectorsunsafe).
 
 Called internally by `'sbp/selectors/overwrite'`.
 
@@ -60,7 +60,9 @@ Called internally by `'sbp/selectors/overwrite'`.
 
 - Function signature: `function (sels: {[string]: Function}): Array<string>`
 
-Makes it possible to overwrite the implementation of a selector.
+Overwrite the implementation of a selector.
+
+Only works on selectors that were marked unsafe using [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe).
 
 Here's a real-world example of an application using this feature to dynamically switch its behavior from storing data in memory to storing it on disk:
 
@@ -85,11 +87,13 @@ if (production || process.env.GI_PERSIST) {
 
 Returns the function bound to the given selector.
 
-### `'sbp/domains/lock'`
+### `'sbp/selectors/unsafe'`
 
 - Function signature: `function (doms: [string])`
 
-Prevents selectors in the given domain(s) from being overwritten or unregistered.
+Marks these selectors as overwritable via [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite).
+
+To use, must be called before registering any selectors.
 
 ### `'sbp/filters/global/add'`
 

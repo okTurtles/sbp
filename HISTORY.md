@@ -1,5 +1,10 @@
 # History
 
+#### 2.0.0
+
+- Selectors are locked by default. Use `'sbp/selectors/unsafe'` before registering selectors that you intend to overwrite.
+- Switched to MIT License with board approval.
+
 #### 1.1.1
 
 - Actually build the previous changes

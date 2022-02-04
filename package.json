@@ -1,6 +1,6 @@
 {
   "name": "@sbp/sbp",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Selector Basic Programming: JavaScript Edition",
   "main": "dist/main.cjs",
   "type": "module",
@@ -18,7 +18,7 @@
   },
   "browserslist": "> 0.25% and not dead",
   "author": "Greg Slepak",
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "eslintConfig": {
     "root": true,
     "parser": "@babel/eslint-parser",
