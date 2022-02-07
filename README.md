@@ -49,7 +49,7 @@ The core `sbp` function is only about 12 lines, and yet the impact of these 12 l
 - :book: **[Apps written using SBP](docs/apps.md)**
 - :book: **[SBP Language Support](docs/language-support.md)**
 
-See also **[SBP Features](sbp-features)** below.
+See also **[SBP Features](#sbp-features)** below.
 
 ### Quick Examples
 
