@@ -15,33 +15,78 @@ SBP: Selector-based programming, is a programming paradigm for building secure s
 
 > "I wish I knew about this when I first started programming." — Greg Slepak
 
-### Core SBP Resources
+### Installing
 
-Installing and using SBP is easy:
+Installing and using SBP is easy.
+
+```
+$ npm install -S @sbp/sbp
+```
+
+Import the `sbp` function wherever you want to use it:
 
 ```js
 import sbp from '@sbp/sbp'
 
 sbp('sbp/selectors/register', {
-  'my-domain/my-great-selector': function () {
-    console.log('hello!')
+  'my-domain/my-great-selector': function (name) {
+    console.log(`hello ${name}!`)
   }
 })
 
-// call your selector
-sbp('my-domain/my-great-selector') // prints "hello!"
+// call your selector from anywhere in the project
+sbp('my-domain/my-great-selector', 'jill') // prints "hello jill!"
 ```
 
-SBP is **tiny** (about 80 lines, unminified, and zero dependencies).
+SBP is **tiny** (about 80 lines, unminified) and has zero dependencies.
 
 The core `sbp` function is only about 12 lines, and yet the impact of these 12 lines is profound.
 
-Additional resources:
+### Core Resources
 
 - :book: **[SBP Core API](docs/sbp-api.md)**
 - :book: **[SBP-based libraries](docs/libraries.md)**
 - :book: **[Apps written using SBP](docs/apps.md)**
 - :book: **[SBP Language Support](docs/language-support.md)**
+
+See also **[SBP Features](sbp-features)** below.
+
+### Quick Examples
+
+In SBP everything works based on selectors. A selector is a string composed of two parts: a _domain_ and an _action_. For example, in `'okTurtles.data/set'`, the domain is `okTurtles.data` and the action is `/set`.
+The first argument of `sbp()` is always a registered selector and the rest of the arguments are parameters to the function assigned to the selector.
+
+```
+sbp(selector, ...args)
+```
+
+You can think about it as calling a normal function, but with more advantages. One of them is to access any selector from anywhere in the project by just importing `sbp` itself.
+
+```js
+// Using SBP:
+import sbp from '~/shared/sbp.js'
+
+// - call any selector registered
+sbp('okTurtles.data/set', { login: true })
+sbp('okTurtles.events/emit', 'CLOSE_MODAL')
+```
+
+```js
+// Using standard functions:
+
+// - import each function individually
+import okTurtlesDataSet from 'path/to/method/data-set.js'
+import okTurtlesEventsEmit from 'path/to/method/events-emit.js'
+
+okTurtlesDataSet({ login: true })
+okTurtlesEventsEmit('CLOSE_MODAL')
+```
+
+There are many more things you can do with SBP.
+
+Some of them are described below in under **[SBP Features](#sbp-features)**.
+
+More details about SBP can be found in the **[Core Resources](#core-resources)** above.
 
 ### Backstory
 
