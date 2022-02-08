@@ -8,7 +8,7 @@ SBP has 3 core concepts:
 2. Domains: a group of related selectors.
 3. Filters: functions that can intercept calls to selectors. They can also prevent a selector's function from running by returning `false`.
 
-This file will covering everything, including all built-in selectors, as well as the per-domain selectors that are created for you, of which there is currently only one: `_init`.
+This file will cover everything, including all built-in selectors, as well as the per-domain selectors that are created for you, of which there is currently only one: `_init`.
 
 - [`'sbp/selectors/register'`](#sbpselectorsregister) (required)
 - [`'sbp/selectors/unregister'`](#sbpselectorsunregister)
