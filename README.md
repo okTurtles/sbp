@@ -84,7 +84,7 @@ okTurtlesEventsEmit('CLOSE_MODAL')
 
 There are many more things you can do with SBP.
 
-Some of them are described below in under **[SBP Features](#sbp-features)**.
+Some of them are described below under **[SBP Features](#sbp-features)**.
 
 More details about SBP can be found in the **[Core Resources](#core-resources)** above.
 
@@ -196,6 +196,8 @@ Here are things you can do with SBP:
 But seriously, you can do stuff with SBP that you couldn't really do in the language you were using. Specifically, it is uncommon to be able to trivially:
 
 - Serialize computation for later use. Usually this requires a special programming language (like LISP), or a cumbersome library. With SBP, you get it for free.
+
+- Create a firewall for networking, and low-level (or high-level) sandboxing.
 
 - You can create a programming language using SBP since everything imaginable can be represented as a string. For example, here we define the primitive JavaScript operator `if` using SBP in JavaScript:
 
