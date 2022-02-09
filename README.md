@@ -172,14 +172,14 @@ In JavaScript, strings are usually represented with single quotes, so an SBP sel
 
 #### Core SBP Selectors
 
-The JavaScript SBP library comes with 8 predefined core selectors, of which only 2 are required for a semi-functional SBP implementation:
+The JavaScript SBP library comes with 8 predefined core selectors:
 
-- `'sbp/selectors/register'` (required)
+- `'sbp/selectors/register'`
 - `'sbp/selectors/unregister'`
 - `'sbp/selectors/overwrite'`
 - `'sbp/selectors/fn'`
 - `'sbp/selectors/unsafe'`
-- `'sbp/filters/global/add'` (required)
+- `'sbp/filters/global/add'`
 - `'sbp/filters/domain/add'`
 - `'sbp/filters/selector/add'`
 
