@@ -10,12 +10,12 @@ SBP has 3 core concepts:
 
 This file will cover everything, including all built-in selectors, as well as the per-domain selectors that are created for you, of which there is currently only one: `_init`.
 
-- [`'sbp/selectors/register'`](#sbpselectorsregister) (required)
+- [`'sbp/selectors/register'`](#sbpselectorsregister)
 - [`'sbp/selectors/unregister'`](#sbpselectorsunregister)
 - [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite)
 - [`'sbp/selectors/fn'`](#sbpselectorsfn)
 - [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe)
-- [`'sbp/filters/global/add'`](#sbpfiltersglobaladd) (required)
+- [`'sbp/filters/global/add'`](#sbpfiltersglobaladd)
 - [`'sbp/filters/domain/add'`](#sbpfiltersdomainadd)
 - [`'sbp/filters/selector/add'`](#sbpfiltersselectoradd)
 
