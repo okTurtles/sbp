@@ -183,7 +183,7 @@ The JavaScript SBP library comes with 8 predefined core selectors:
 - `'sbp/filters/domain/add'`
 - `'sbp/filters/selector/add'`
 
-Since most languages use either single or double-quotes to define strings, most SBP selectors look the same no matter what programming language they're written in. Of course, English is assumed to the language the selectors themselves use, as most software is written in English, but it doesn't have to be. It is recommended though, because this makes it possible to understand computers no matter where in the world you live, as long as you understand English.
+Since most languages use either single or double-quotes to define strings, most SBP selectors look the same no matter what programming language they're written in. English is assumed to be the language the selectors are written in, as most software is written in English, but it doesn't have to be. It's recommended though, because this makes it possible to understand computers no matter where in the world you live, as long as you understand English.
 
 ### SBP Features
 
