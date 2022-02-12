@@ -1,7 +1,7 @@
 {
   "name": "@sbp/sbp",
-  "version": "2.1.1",
-  "description": "Selector Basic Programming: JavaScript Edition",
+  "version": "2.1.2",
+  "description": "Selector-based Programming: JavaScript Edition",
   "main": "dist/main.cjs",
   "type": "module",
   "exports": {

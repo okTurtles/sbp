@@ -1,5 +1,9 @@
 # History
 
+#### 2.1.2
+
+- Fixed typo in NPM description. No source changes.
+
 #### 2.1.1
 
 - reduced size of `dist/main.cjs` by updating `"browserslist"`
