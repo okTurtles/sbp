@@ -15,6 +15,7 @@ This file will cover everything, including all built-in selectors, as well as th
 - [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite)
 - [`'sbp/selectors/fn'`](#sbpselectorsfn)
 - [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe)
+- [`'sbp/selectors/lock'`](#sbpselectorslock)
 - [`'sbp/filters/global/add'`](#sbpfiltersglobaladd)
 - [`'sbp/filters/domain/add'`](#sbpfiltersdomainadd)
 - [`'sbp/filters/selector/add'`](#sbpfiltersselectoradd)
@@ -60,7 +61,7 @@ Called internally by `'sbp/selectors/overwrite'`.
 
 - Function signature: `function (sels: {[string]: Function}): Array<string>`
 
-Overwrite the implementation of a selector.
+Overwrite the implementation of a selector. Remember to call `'sbp/selectors/lock'` after overwriting.
 
 Only works on selectors that were marked unsafe using [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe).
 
@@ -78,6 +79,7 @@ if (production || process.env.GI_PERSIST) {
     },
     'gi.db/set': sbp('sbp/selectors/fn', 'backend/db/writeFile')
   })
+  sbp('sbp/selectors/lock', ['gi.db/get', 'gi.db/set', 'gi.db/delete'])
 }
 ```
 
@@ -89,11 +91,25 @@ Returns the function bound to the given selector.
 
 ### `'sbp/selectors/unsafe'`
 
-- Function signature: `function (doms: [string])`
+- Function signature: `function (sels: [string])`
 
 Marks these selectors as overwritable via [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite).
 
-To use, must be called before registering any selectors.
+To use, must be called before registering these selectors.
+
+Selectors that are overwritten will also have access to the internal state of the domain via the `this` variable!
+
+Remember to call `'sbp/selectors/lock'` after overwriting!
+
+### `'sbp/selectors/lock'`
+
+- Function signature: `function (sels: [string])`
+
+Prevers these selectors from being overwritten again.
+
+Always call this after overwriting selectors unless they're designed to be left unsafe.
+
+Remember that 
 
 ### `'sbp/filters/global/add'`
 

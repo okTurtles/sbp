@@ -68,8 +68,13 @@
         const domain = domainFromSelector(selector);
 
         if (selectors[selector]) {
-          (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: ${selector}`);
+          (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: '${selector}'`);
         } else if (typeof sels[selector] === 'function') {
+          if (unsafeSelectors[selector]) {
+            // important warning in case we loaded any malware beforehand and aren't expecting this
+            (console.warn || console.log)(`[SBP WARN]: registering unsafe selector: '${selector}' (remember to lock after overwriting)`);
+          }
+
           const fn = selectors[selector] = sels[selector];
           registered.push(selector); // ensure each domain has a domain state associated with it
 
@@ -102,14 +107,18 @@
       return sbp('sbp/selectors/register', sels);
     },
     'sbp/selectors/unsafe': function (sels) {
-      if (Object.keys(domains).length > 1) {
-        // 1 because 'sbp' is registered first thing
-        throw new Error('must be called before registering any selectors');
-      }
+      for (const selector of sels) {
+        if (selectors[selector]) {
+          throw new Error('unsafe must be called before registering selector');
+        }
 
-      sels.forEach(s => {
-        unsafeSelectors[s] = true;
-      });
+        unsafeSelectors[selector] = true;
+      }
+    },
+    'sbp/selectors/lock': function (sels) {
+      for (const selector of sels) {
+        delete unsafeSelectors[selector];
+      }
     },
     'sbp/selectors/fn': function (sel) {
       return selectors[sel];

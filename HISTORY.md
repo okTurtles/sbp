@@ -1,5 +1,10 @@
 # History
 
+#### 2.2.0
+
+- Added `'sbp/selectors/lock'`. Make sure to call this after overwriting any unsafe selectors!
+- Improved console warnings
+
 #### 2.1.2
 
 - Fixed typo in NPM description. No source changes.
