@@ -64,7 +64,7 @@ You can think about it as calling a normal function, but with more advantages. O
 
 ```js
 // Using SBP:
-import sbp from '~/shared/sbp.js'
+import sbp from '@sbp/sbp'
 
 // - call any selector registered
 sbp('okTurtles.data/set', { login: true })
