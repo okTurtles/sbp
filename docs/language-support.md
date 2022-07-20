@@ -6,7 +6,7 @@ Current implementations include:
 
 - [sbp-js](https://github.com/okTurtles/sbp-js/) - JavaScript
 
-## Implementing SBP In Your favorite language
+## Implementing SBP In Your Favorite Language
 
 To implement SBP, you just need to implement the [core SBP API](/docs/sbp-api.md).
 
