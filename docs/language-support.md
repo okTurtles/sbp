@@ -14,6 +14,7 @@ This involves:
 
 - Implementing the core SBP selectors (the `sbp` domain)
 - Making sure that your implementation of the core selectors has the same exact behavior as this one.
+  - **Exception:** you can ignore all parts of the JS code that have to do with domain-specific state, as that relies on a JS-specific feature. See comment below for more details.
 
 Optional:
 
