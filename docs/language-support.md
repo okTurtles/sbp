@@ -5,6 +5,7 @@ SBP is designed to work well no matter what programming language you're using.
 Current implementations include:
 
 - [sbp-js](https://github.com/okTurtles/sbp-js/) - JavaScript
+- [SBP.jl](https://github.com/snowteamer/SBP.jl/) - Julia
 
 ## Implementing SBP In Your Favorite Language
 
