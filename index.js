@@ -2,10 +2,14 @@
 
 'use strict'
 
+type Domain = {
+  locked: Boolean
+  state: any
+}
 type TypeFilter = (domain: string, selector: string, data: any) => ?boolean
 
 const selectors: {[string]: Function} = {}
-const domains: {[string]: Object} = {}
+const domains: {[string]: Domain} = {}
 const globalFilters: Array<TypeFilter> = []
 const domainFilters: {[string]: Array<TypeFilter>} = {}
 const selectorFilters: {[string]: Array<TypeFilter>} = {}
@@ -102,6 +106,19 @@ const SBP_BASE_SELECTORS = {
   'sbp/filters/selector/add': function (selector: string, filter: TypeFilter) {
     if (!selectorFilters[selector]) selectorFilters[selector] = []
     selectorFilters[selector].push(filter)
+  },
+  'sbp/domains/lock': function (domainNameOrNames: string | string[] | void) {
+    // If no argument was given then locks every known domain.
+    if (domainNameOrNames === undefined) {
+      for (const domain of Object.values(domains)) {
+        domain.locked = true
+      }
+    } else for (const name of typeof domainNameOrNames === 'string' ? [domainNameOrNames] : domainNameOrNames) {
+      if (!domains[name]) {
+        throw new Error(`SBP: unknown or invalid domain name: ${name}`)
+      }
+      domains[name].locked = true
+    }
   }
 }
 
