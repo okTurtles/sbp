@@ -41,8 +41,12 @@ const SBP_BASE_SELECTORS = {
   'sbp/selectors/register': function (sels) {
     const registered = []
     for (const selector in sels) {
-      const domain = domainFromSelector(selector)
-      if (selectors[selector]) {
+      const domainName = domainFromSelector(selector)
+      // ensure each domain has a domain state associated with it
+      const domain = domainName in domains ? domains[domainName] : (domains[domainName] = { state: {}, locked: false })
+      if (domain.locked) {
+        (console.warn || console.log)(`[SBP WARN]: not registering selector on locked domain: '${selector}'`)
+      } else if (selectors[selector]) {
         (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: '${selector}'`)
       } else if (typeof sels[selector] === 'function') {
         if (unsafeSelectors[selector]) {
@@ -51,10 +55,6 @@ const SBP_BASE_SELECTORS = {
         }
         const fn = selectors[selector] = sels[selector]
         registered.push(selector)
-        // ensure each domain has a domain state associated with it
-        if (!domains[domain]) {
-          domains[domain] = { state: {} }
-        }
         // call the special _init function immediately upon registering
         if (selector === `${domain}/_init`) {
           fn.call(domains[domain].state)
@@ -101,6 +101,19 @@ const SBP_BASE_SELECTORS = {
   'sbp/filters/selector/add': function (selector, filter) {
     if (!selectorFilters[selector]) selectorFilters[selector] = []
     selectorFilters[selector].push(filter)
+  },
+  'sbp/domains/lock': function (domainNameOrNames) {
+    // If no argument was given then locks every known domain.
+    if (domainNameOrNames === undefined) {
+      for (const domain of Object.values(domains)) {
+        domain.locked = true
+      }
+    } else for (const name of typeof domainNameOrNames === 'string' ? [domainNameOrNames] : domainNameOrNames) {
+      if (!domains[name]) {
+        throw new Error(`SBP: unknown or invalid domain name: ${name}`)
+      }
+      domains[name].locked = true
+    }
   }
 }
 

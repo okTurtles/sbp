@@ -3,8 +3,8 @@
 'use strict'
 
 type Domain = {
-  locked: Boolean
-  state: any
+  locked: Boolean;
+  state: any;
 }
 type TypeFilter = (domain: string, selector: string, data: any) => ?boolean
 
@@ -46,8 +46,12 @@ const SBP_BASE_SELECTORS = {
   'sbp/selectors/register': function (sels: {[string]: Function}): Array<string> {
     const registered = []
     for (const selector in sels) {
-      const domain = domainFromSelector(selector)
-      if (selectors[selector]) {
+      const domainName = domainFromSelector(selector)
+      // ensure each domain has a domain state associated with it
+      const domain = domainName in domains ? domains[domainName] : (domains[domainName] = { state: {}, locked: false })
+      if (domain.locked) {
+        (console.warn || console.log)(`[SBP WARN]: not registering selector on locked domain: '${selector}'`)
+      } else if (selectors[selector]) {
         (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: '${selector}'`)
       } else if (typeof sels[selector] === 'function') {
         if (unsafeSelectors[selector]) {
@@ -56,10 +60,6 @@ const SBP_BASE_SELECTORS = {
         }
         const fn = selectors[selector] = sels[selector]
         registered.push(selector)
-        // ensure each domain has a domain state associated with it
-        if (!domains[domain]) {
-          domains[domain] = { state: {} }
-        }
         // call the special _init function immediately upon registering
         if (selector === `${domain}/_init`) {
           fn.call(domains[domain].state)
