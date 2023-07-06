@@ -69,5 +69,11 @@ describe('Test SBP core selectors', () => {
     // Now domain3 should also have been locked.
     should(sbp('sbp/selectors/register', { 'domain3/test2' () {} }).length).equal(0)
   })
+  it('should not unregister selectors on a locked domain', () => {
+    sbp('sbp/domains/lock', 'test')
+    should.throws(() => {
+      sbp('sbp/selectors/unregister', 'test/unsafe')
+    })
+  })
   // TODO: test filters
 })

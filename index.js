@@ -73,6 +73,9 @@ const SBP_BASE_SELECTORS = {
       if (!unsafeSelectors[selector]) {
         throw new Error(`SBP: can't unregister locked selector: ${selector}`)
       }
+      if (domains[domainFromSelector(selector)]?.locked) {
+        throw new Error(`SBP: can't unregister selector on a locked domain: '${selector}'`)
+      }
       delete selectors[selector]
     }
   },

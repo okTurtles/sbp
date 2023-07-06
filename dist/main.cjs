@@ -95,8 +95,14 @@
     },
     'sbp/selectors/unregister': function (sels) {
       for (const selector of sels) {
+        var _domains$domainFromSe;
+
         if (!unsafeSelectors[selector]) {
           throw new Error(`SBP: can't unregister locked selector: ${selector}`);
+        }
+
+        if ((_domains$domainFromSe = domains[domainFromSelector(selector)]) !== null && _domains$domainFromSe !== void 0 && _domains$domainFromSe.locked) {
+          throw new Error(`SBP: can't unregister selector on a locked domain: '${selector}'`);
         }
 
         delete selectors[selector];
