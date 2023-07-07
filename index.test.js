@@ -17,7 +17,7 @@ describe('Test SBP core selectors', () => {
     const sels = sbp('sbp/selectors/register', {
       'test/safe1' () {},
       'test/safe2': fn,
-      'test/unsafe' () {},
+      'test/unsafe' () {}
     })
     should(sels).have.length(3)
     should(typeof sbp('sbp/selectors/fn', 'test/safe1')).equal('function')
