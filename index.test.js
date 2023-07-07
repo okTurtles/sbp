@@ -17,7 +17,7 @@ describe('Test SBP core selectors', () => {
     const sels = sbp('sbp/selectors/register', {
       'test/safe1' () {},
       'test/safe2': fn,
-      'test/unsafe' () {}
+      'test/unsafe' () {},
     })
     should(sels).have.length(3)
     should(typeof sbp('sbp/selectors/fn', 'test/safe1')).equal('function')
@@ -39,6 +39,41 @@ describe('Test SBP core selectors', () => {
       'test/unsafe': function () { return 'foo' }
     })
     should(sbp('test/unsafe')).equal('foo')
+  })
+  it('should fail to lock a non-existent domain', () => {
+    should.throws(() => {
+      sbp('sbp/domains/lock', 'testDomain')
+    })
+  })
+  it('should lock a given domain', () => {
+    sbp('sbp/selectors/register', {
+      'testDomain/s1' () {}
+    })
+    sbp('sbp/domains/lock', 'testDomain')
+    should(sbp('sbp/selectors/register', { 'testDomain/s2' () {} }).length).equal(0)
+  })
+  it('should lock several domains at once', () => {
+    sbp('sbp/selectors/register', {
+      'domain1/test' () {},
+      'domain2/test' () {},
+      'domain3/test' () {}
+    })
+    sbp('sbp/domains/lock', ['domain1', 'domain2'])
+    should(sbp('sbp/selectors/register', { 'domain1/test2' () {} }).length).equal(0)
+    should(sbp('sbp/selectors/register', { 'domain2/test2' () {} }).length).equal(0)
+    // Fo now domain3 should not have been locked.
+    should(sbp('sbp/selectors/register', { 'domain3/test2' () {} }).length).equal(1)
+  })
+  it('should lock all domains at once', () => {
+    sbp('sbp/domains/lock')
+    // Now domain3 should also have been locked.
+    should(sbp('sbp/selectors/register', { 'domain3/test2' () {} }).length).equal(0)
+  })
+  it('should not unregister selectors on a locked domain', () => {
+    sbp('sbp/domains/lock', 'test')
+    should.throws(() => {
+      sbp('sbp/selectors/unregister', 'test/unsafe')
+    })
   })
   // TODO: test filters
 })
