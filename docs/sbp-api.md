@@ -119,7 +119,7 @@ Once a selector is locked it cannot be unlocked.
 If `domains` are passed in, prevents new selectors from being registered on the domains and also prevents existing selectors from being unregistered or overwritten.
 If no argument is passed in, locks all currently registered domains.
 
-This selector is ensures that rogue code cannot get access to domain state by registering a new selector on that domain, and therefore is preferred to `'sbp/selectors/lock'`.
+This selector ensures that rogue code cannot get access to domain state by registering a new selector on that domain, and therefore is preferred to `'sbp/selectors/lock'`.
 
 Once a domain is locked it cannot be unlocked.
 
