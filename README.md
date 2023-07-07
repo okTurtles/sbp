@@ -96,11 +96,13 @@ I sat, and sat, and sat some more, trying to peer into the *essence* of what sec
 
 And then it hit me: the reason why computers are so insecure - is because *we do not understand them.*
 
-We do not understand what they're doing.
+We do not understand what they're doing, and specifically, what they're supposed to be doing.
 
-**The activity that takes place within a computer is decoupled from the _description_ of that activity.**
+**The activity that takes place within a computer is decoupled from the _description_ of that activity, and this can lead to unexpected behavior.**
 
-When something happens inside of a computer, the *low-level* developer-facing description of what is happening comes in the form of unreadable, incomprehensible symbols and numbers. To make matters worse these symbols and numbers often change. That is how it's written, and is how it's compiled, that is what appears in system log messages, that is what developer tools show to us, and in some cases, even to users.
+Security is all about the computer doing what you expect it to do, and not something else.
+
+To know what to expect from a computer, we need to know what they're being told to do. When something happens inside of a computer, the *low-level* developer-facing description of what is happening comes in the form of unreadable, incomprehensible symbols and numbers. To make matters worse these symbols and numbers often change. That is how it's written, and is how it's compiled, that is what appears in system log messages, that is what developer tools show to us, and in some cases, even to users.
 
 ![](assets/error.png)
 
