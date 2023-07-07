@@ -3,7 +3,7 @@
 'use strict'
 
 type Domain = {
-  locked: Boolean;
+  locked: boolean;
   state: any;
 }
 type TypeFilter = (domain: string, selector: string, data: any) => ?boolean
@@ -61,14 +61,14 @@ const SBP_BASE_SELECTORS = {
         const fn = selectors[selector] = sels[selector]
         registered.push(selector)
         // call the special _init function immediately upon registering
-        if (selector === `${domain}/_init`) {
-          fn.call(domains[domain].state)
+        if (selector === `${domainName}/_init`) {
+          fn.call(domain.state)
         }
       }
     }
     return registered
   },
-  'sbp/selectors/unregister': function (sels: [string]) {
+  'sbp/selectors/unregister': function (sels: string[]) {
     for (const selector of sels) {
       if (!unsafeSelectors[selector]) {
         throw new Error(`SBP: can't unregister locked selector: ${selector}`)
@@ -83,7 +83,7 @@ const SBP_BASE_SELECTORS = {
     sbp('sbp/selectors/unregister', Object.keys(sels))
     return sbp('sbp/selectors/register', sels)
   },
-  'sbp/selectors/unsafe': function (sels: [string]) {
+  'sbp/selectors/unsafe': function (sels: string[]) {
     for (const selector of sels) {
       if (selectors[selector]) {
         throw new Error('unsafe must be called before registering selector')
@@ -91,7 +91,7 @@ const SBP_BASE_SELECTORS = {
       unsafeSelectors[selector] = true
     }
   },
-  'sbp/selectors/lock': function (sels: [string]) {
+  'sbp/selectors/lock': function (sels: string[]) {
     for (const selector of sels) {
       delete unsafeSelectors[selector]
     }
@@ -110,17 +110,19 @@ const SBP_BASE_SELECTORS = {
     if (!selectorFilters[selector]) selectorFilters[selector] = []
     selectorFilters[selector].push(filter)
   },
-  'sbp/domains/lock': function (domainNameOrNames: string | string[] | void) {
+  'sbp/domains/lock': function (domainNames?: string[]) {
     // If no argument was given then locks every known domain.
-    if (domainNameOrNames === undefined) {
-      for (const domain of Object.values(domains)) {
-        domain.locked = true
+    if (!domainNames) {
+      for (const name in domains) {
+        domains[name].locked = true
       }
-    } else for (const name of typeof domainNameOrNames === 'string' ? [domainNameOrNames] : domainNameOrNames) {
-      if (!domains[name]) {
-        throw new Error(`SBP: unknown or invalid domain name: ${name}`)
+    } else {
+      for (const name of domainNames) {
+        if (!domains[name]) {
+          throw new Error(`SBP: cannot lock non-existent domain: ${name}`)
+        }
+        domains[name].locked = true
       }
-      domains[name].locked = true
     }
   }
 }

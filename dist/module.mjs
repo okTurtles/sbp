@@ -56,8 +56,8 @@ const SBP_BASE_SELECTORS = {
         const fn = selectors[selector] = sels[selector]
         registered.push(selector)
         // call the special _init function immediately upon registering
-        if (selector === `${domain}/_init`) {
-          fn.call(domains[domain].state)
+        if (selector === `${domainName}/_init`) {
+          fn.call(domain.state)
         }
       }
     }
@@ -105,17 +105,19 @@ const SBP_BASE_SELECTORS = {
     if (!selectorFilters[selector]) selectorFilters[selector] = []
     selectorFilters[selector].push(filter)
   },
-  'sbp/domains/lock': function (domainNameOrNames) {
+  'sbp/domains/lock': function (domainNames) {
     // If no argument was given then locks every known domain.
-    if (domainNameOrNames === undefined) {
-      for (const domain of Object.values(domains)) {
-        domain.locked = true
+    if (!domainNames) {
+      for (const name in domains) {
+        domains[name].locked = true
       }
-    } else for (const name of typeof domainNameOrNames === 'string' ? [domainNameOrNames] : domainNameOrNames) {
-      if (!domains[name]) {
-        throw new Error(`SBP: unknown or invalid domain name: ${name}`)
+    } else {
+      for (const name of domainNames) {
+        if (!domains[name]) {
+          throw new Error(`SBP: cannot lock non-existent domain: ${name}`)
+        }
+        domains[name].locked = true
       }
-      domains[name].locked = true
     }
   }
 }

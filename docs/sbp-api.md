@@ -16,6 +16,7 @@ This file will cover everything, including all built-in selectors, as well as th
 - [`'sbp/selectors/fn'`](#sbpselectorsfn)
 - [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe)
 - [`'sbp/selectors/lock'`](#sbpselectorslock)
+- [`'sbp/domains/lock'`](#sbpdomainslock)
 - [`'sbp/filters/global/add'`](#sbpfiltersglobaladd)
 - [`'sbp/filters/domain/add'`](#sbpfiltersdomainadd)
 - [`'sbp/filters/selector/add'`](#sbpfiltersselectoradd)
@@ -51,7 +52,7 @@ await sbp('mydomain/async-action') // waits on the database to load
 
 ### `'sbp/selectors/unregister'`
 
-- Function signature: `function (sels: [string])`
+- Function signature: `function (sels: string[])`
 
 Allows you to unregister selectors that were [marked unsafe](#sbpselectorsunsafe).
 
@@ -91,7 +92,7 @@ Returns the function bound to the given selector.
 
 ### `'sbp/selectors/unsafe'`
 
-- Function signature: `function (sels: [string])`
+- Function signature: `function (sels: string[])`
 
 Marks these selectors as overwritable via [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite).
 
@@ -99,17 +100,28 @@ To use, must be called before registering these selectors.
 
 Selectors that are overwritten will also have access to the internal state of the domain via the `this` variable!
 
-Remember to call `'sbp/selectors/lock'` after overwriting!
+Remember to call `'sbp/selectors/lock'` or `'sbp/domains/lock'` after overwriting!
 
 ### `'sbp/selectors/lock'`
 
-- Function signature: `function (sels: [string])`
+- Function signature: `function (sels: string[])`
 
-Prevers these selectors from being overwritten again.
+Prevents these selectors from being unregistered and overwritten.
 
-Always call this after overwriting selectors unless they're designed to be left unsafe.
+Always call either this or `'sbp/domains/lock'` after overwriting selectors unless they're designed to be left unsafe.
 
-Remember that 
+Once a selector is locked it cannot be unlocked.
+
+### `'sbp/domains/lock'`
+
+- Function signature: `function (domains?: string[])`
+
+If `domains` are passed in, prevents new selectors from being registered on the domains and also prevents existing selectors from being unregistered or overwritten.
+If no argument is passed in, locks all currently registered domains.
+
+This selector is ensures that rogue code cannot get access to domain state by registering a new selector on that domain, and therefore is preferred to `'sbp/selectors/lock'`.
+
+Once a domain is locked it cannot be unlocked.
 
 ### `'sbp/filters/global/add'`
 

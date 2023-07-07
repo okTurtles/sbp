@@ -180,11 +180,14 @@ SBP comes with the following predefined core selectors:
 - `'sbp/selectors/fn'`
 - `'sbp/selectors/unsafe'`
 - `'sbp/selectors/lock'`
+- `'sbp/domains/lock'`
 - `'sbp/filters/global/add'`
 - `'sbp/filters/domain/add'`
 - `'sbp/filters/selector/add'`
 
 Since most languages use either single or double-quotes to define strings, most SBP selectors look the same no matter what programming language they're written in. English is assumed to be the language the selectors are written in, as most software is written in English, but it doesn't have to be. It's recommended though, because this makes it possible to understand computers no matter where in the world you live, as long as you understand English.
+
+- :book: **[SBP Core API](docs/sbp-api.md)**
 
 ### SBP Features
 

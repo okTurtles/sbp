@@ -1,5 +1,9 @@
 # History
 
+#### 2.3.0
+
+- Added `'sbp/domains/lock'`. Stronger protection than `'sbp/selectors/lock'`, prevents rogue code from accessing domain state. h/t **[@snowteamer](https://github.com/okTurtles/sbp-js/pull/4)**
+
 #### 2.2.0
 
 - Added `'sbp/selectors/lock'`. Make sure to call this after overwriting any unsafe selectors!

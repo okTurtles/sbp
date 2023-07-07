@@ -42,14 +42,14 @@ describe('Test SBP core selectors', () => {
   })
   it('should fail to lock a non-existent domain', () => {
     should.throws(() => {
-      sbp('sbp/domains/lock', 'testDomain')
+      sbp('sbp/domains/lock', ['testDomain'])
     })
   })
   it('should lock a given domain', () => {
     sbp('sbp/selectors/register', {
       'testDomain/s1' () {}
     })
-    sbp('sbp/domains/lock', 'testDomain')
+    sbp('sbp/domains/lock', ['testDomain'])
     should(sbp('sbp/selectors/register', { 'testDomain/s2' () {} }).length).equal(0)
   })
   it('should lock several domains at once', () => {
@@ -70,7 +70,7 @@ describe('Test SBP core selectors', () => {
     should(sbp('sbp/selectors/register', { 'domain3/test2' () {} }).length).equal(0)
   })
   it('should not unregister selectors on a locked domain', () => {
-    sbp('sbp/domains/lock', 'test')
+    sbp('sbp/domains/lock', ['test'])
     should.throws(() => {
       sbp('sbp/selectors/unregister', 'test/unsafe')
     })
