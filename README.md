@@ -82,9 +82,7 @@ okTurtlesDataSet({ login: true })
 okTurtlesEventsEmit('CLOSE_MODAL')
 ```
 
-There are many more things you can do with SBP.
-
-Some of them are described below under **[SBP Features](#sbp-features)**.
+Now we have a stable and comprehensible representation of a function call. There is much more to SBP than improved organization, readability, and project-wide search. Some of the other possibilities are described below under **[SBP Features](#sbp-features)**.
 
 More details about SBP can be found in the **[Core Resources](#core-resources)** above.
 
