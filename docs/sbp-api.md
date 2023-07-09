@@ -27,7 +27,7 @@ This file will cover everything, including all built-in selectors, as well as th
 
 - Function signature: `function (sels: {[string]: Function}): Array<string>`
 
-Registers new selectors, leaving them unlocked to allow possiblity of override with `'sbp/selectors/overwrite'`.
+Registers new selectors. If you would like to later overwrite them using [`'sbp/selectors/overwrite'`](#sbpselectorsoverwrite), make sure to call [`'sbp/selectors/unsafe'`](#sbpselectorsunsafe) on the selectors before registering them.
 
 For each domain in the given selector-map, also registers `<domain>/_init` that acts as a constructor for the entire domain, to give selectors access to a domain-wide state via the `this` variable. Since `this` is a JavaScript-specific feature, the domain-specific state will be accessed differently in different languages.
 
