@@ -1,23 +1,21 @@
-// @flow
-
-'use strict'
-
 type Domain = {
   locked: boolean;
-  state: any;
+  state: object;
 }
-type TypeFilter = (domain: string, selector: string, data: any) => ?boolean
+type Callable = typeof Function.prototype
+type TypeFilter = (domain: string, selector: string, data: unknown) => boolean | null | undefined
 
-const selectors: {[string]: Function} = {}
-const domains: {[string]: Domain} = {}
-const globalFilters: Array<TypeFilter> = []
-const domainFilters: {[string]: Array<TypeFilter>} = {}
-const selectorFilters: {[string]: Array<TypeFilter>} = {}
-const unsafeSelectors: {[string]: boolean} = {}
+const selectors: {[k: string]: Callable} = Object.create(null)
+const domains: {[k: string]: Domain} = Object.create(null)
+const globalFilters: TypeFilter[] = []
+const domainFilters: {[k: string]: TypeFilter[]} = Object.create(null)
+const selectorFilters: {[k: string]: TypeFilter[]} = Object.create(null)
+const unsafeSelectors: {[k: string]: boolean} = Object.create(null)
 
 const DOMAIN_REGEX = /^[^/]+/
 
-function sbp (selector: string, ...data: any): any {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function sbp (selector: string, ...data: unknown[]): any {
   const domain = domainFromSelector(selector)
   if (!selectors[selector]) {
     throw new Error(`SBP: selector not registered: ${selector}`)
@@ -43,19 +41,19 @@ export function domainFromSelector (selector: string): string {
 }
 
 const SBP_BASE_SELECTORS = {
-  'sbp/selectors/register': function (sels: {[string]: Function}): Array<string> {
+  'sbp/selectors/register': (sels: typeof selectors): string[] => {
     const registered = []
     for (const selector in sels) {
       const domainName = domainFromSelector(selector)
       // ensure each domain has a domain state associated with it
-      const domain = domainName in domains ? domains[domainName] : (domains[domainName] = { state: {}, locked: false })
+      const domain = domainName in domains ? domains[domainName] : (domains[domainName] = { state: Object.create(null), locked: false })
       if (domain.locked) {
         (console.warn || console.log)(`[SBP WARN]: not registering selector on locked domain: '${selector}'`)
       } else if (selectors[selector]) {
         (console.warn || console.log)(`[SBP WARN]: not registering already registered selector: '${selector}'`)
       } else if (typeof sels[selector] === 'function') {
         if (unsafeSelectors[selector]) {
-          // important warning in case we loaded any malware beforehand and aren't expecting this
+          // important warning in case we loaded unknown malware beforehand and aren't expecting this
           (console.warn || console.log)(`[SBP WARN]: registering unsafe selector: '${selector}' (remember to lock after overwriting)`)
         }
         const fn = selectors[selector] = sels[selector]
@@ -68,7 +66,7 @@ const SBP_BASE_SELECTORS = {
     }
     return registered
   },
-  'sbp/selectors/unregister': function (sels: string[]) {
+  'sbp/selectors/unregister': (sels: string[]) => {
     for (const selector of sels) {
       if (!unsafeSelectors[selector]) {
         throw new Error(`SBP: can't unregister locked selector: ${selector}`)
@@ -79,11 +77,11 @@ const SBP_BASE_SELECTORS = {
       delete selectors[selector]
     }
   },
-  'sbp/selectors/overwrite': function (sels: {[string]: Function}) {
+  'sbp/selectors/overwrite': (sels: typeof selectors) => {
     sbp('sbp/selectors/unregister', Object.keys(sels))
     return sbp('sbp/selectors/register', sels)
   },
-  'sbp/selectors/unsafe': function (sels: string[]) {
+  'sbp/selectors/unsafe': (sels: string[]) => {
     for (const selector of sels) {
       if (selectors[selector]) {
         throw new Error('unsafe must be called before registering selector')
@@ -91,26 +89,26 @@ const SBP_BASE_SELECTORS = {
       unsafeSelectors[selector] = true
     }
   },
-  'sbp/selectors/lock': function (sels: string[]) {
+  'sbp/selectors/lock': (sels: string[]) => {
     for (const selector of sels) {
       delete unsafeSelectors[selector]
     }
   },
-  'sbp/selectors/fn': function (sel: string): Function {
+  'sbp/selectors/fn': (sel: string): typeof selectors[string] => {
     return selectors[sel]
   },
-  'sbp/filters/global/add': function (filter: TypeFilter) {
+  'sbp/filters/global/add': (filter: TypeFilter) => {
     globalFilters.push(filter)
   },
-  'sbp/filters/domain/add': function (domain: string, filter: TypeFilter) {
+  'sbp/filters/domain/add': (domain: string, filter: TypeFilter) => {
     if (!domainFilters[domain]) domainFilters[domain] = []
     domainFilters[domain].push(filter)
   },
-  'sbp/filters/selector/add': function (selector: string, filter: TypeFilter) {
+  'sbp/filters/selector/add': (selector: string, filter: TypeFilter) => {
     if (!selectorFilters[selector]) selectorFilters[selector] = []
     selectorFilters[selector].push(filter)
   },
-  'sbp/domains/lock': function (domainNames?: string[]) {
+  'sbp/domains/lock': (domainNames?: string[]) => {
     // If no argument was given then locks every known domain.
     if (!domainNames) {
       for (const name in domains) {

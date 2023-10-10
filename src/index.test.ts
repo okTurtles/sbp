@@ -3,10 +3,9 @@
 /* eslint-env mocha */
 
 import should from 'should'
-import sinon from 'sinon'
-import sbp from '@sbp/sbp'
 import 'should-sinon'
-import './dist/module.mjs'
+import sinon from 'sinon'
+import sbp from './index.js'
 
 sbp('sbp/selectors/unsafe', ['test/unsafe'])
 
