@@ -1,5 +1,11 @@
 # History
 
+#### 2.4.0
+
+- Added support for star selectors (`domain/*`). When defined, the star selector
+  will be used as a fallback for undefined selectors. The intended use of this
+  feature is implementing domains that use some form of RPC.
+
 #### 2.3.0
 
 - Added `'sbp/domains/lock'`. Stronger protection than `'sbp/selectors/lock'`, prevents rogue code from accessing domain state. h/t **[@snowteamer](https://github.com/okTurtles/sbp-js/pull/4)**

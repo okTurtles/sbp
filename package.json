@@ -1,6 +1,6 @@
 {
   "name": "@sbp/sbp",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Selector-based Programming: JavaScript Edition",
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",
@@ -8,11 +8,11 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/index.d.ts",
+        "types": "./dist/esm/index.d.mts",
         "default": "./dist/esm/index.js"
       },
       "require": {
-        "types": "./dist/umd/index.d.ts",
+        "types": "./dist/umd/index.d.cts",
         "default": "./dist/umd/index.cjs"
       }
     }
@@ -20,8 +20,8 @@
   "homepage": "https://github.com/okTurtles/sbp-js",
   "scripts": {
     "test": "mocha --extension ts --node-option no-warnings=ExperimentalWarning --node-option loader=ts-node/esm -R spec src/**/*.test.ts",
-    "build:esm": "tsc --project tsconfig.json --declaration",
-    "build:umd": "tsc --project tsconfig.umd.json --declaration && mv ./dist/umd/index.js ./dist/umd/index.cjs",
+    "build:esm": "tsc --project tsconfig.json --declaration && mv ./dist/esm/index.d.ts ./dist/esm/index.d.mts",
+    "build:umd": "tsc --project tsconfig.umd.json --declaration && mv ./dist/umd/index.js ./dist/umd/index.cjs && mv ./dist/umd/index.d.ts ./dist/umd/index.d.cts",
     "build": "npm run build:esm && npm run build:umd",
     "lint": "eslint",
     "clean": "rm -f dist/*"
@@ -46,16 +46,16 @@
     "**/*.md"
   ],
   "devDependencies": {
-    "@types/mocha": "10.0.2",
-    "@types/should-sinon": "0.0.10",
-    "@types/sinon": "10.0.19",
-    "@typescript-eslint/eslint-plugin": "6.7.4",
+    "@types/mocha": "10.0.6",
+    "@types/should-sinon": "0.0.12",
+    "@types/sinon": "17.0.3",
+    "@typescript-eslint/eslint-plugin": "7.8.0",
     "eslint-config-standard": "17.0.0-0",
-    "mocha": "10.2.0",
+    "mocha": "10.4.0",
     "should": "13.2.3",
     "should-sinon": "0.0.6",
-    "sinon": "13.0.1",
-    "ts-node": "10.9.1",
-    "typescript": "5.2.2"
+    "sinon": "17.0.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.5"
   }
 }
