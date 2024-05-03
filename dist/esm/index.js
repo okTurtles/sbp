@@ -8,8 +8,19 @@ const DOMAIN_REGEX = /^[^/]+/;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function sbp(selector, ...data) {
     const domain = domainFromSelector(selector);
-    if (!selectors[selector]) {
-        throw new Error(`SBP: selector not registered: ${selector}`);
+    const starSelector = `${domain}/*`;
+    const selExists = !!selectors[selector];
+    // Copy of the original selector
+    let sel = selector;
+    if (!selExists) {
+        // If the selector doesn't exist and the start selector is defined,
+        // use the star selector
+        if (selectors[starSelector]) {
+            sel = starSelector;
+        }
+        else {
+            throw new Error(`SBP: selector not registered: ${selector}`);
+        }
     }
     // Filters can perform additional functions, and by returning `false` they
     // can prevent the execution of a selector. Check the most specific filters first.
@@ -21,7 +32,12 @@ function sbp(selector, ...data) {
             }
         }
     }
-    return selectors[selector].call(domains[domain].state, ...data);
+    if (!selExists) {
+        // When using the star selector, the first argument is the original selector
+        // used when calling `sbp`.
+        data.unshift(selector);
+    }
+    return selectors[sel].apply(domains[domain].state, data);
 }
 export function domainFromSelector(selector) {
     const domainLookup = DOMAIN_REGEX.exec(selector);
