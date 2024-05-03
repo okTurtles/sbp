@@ -64,7 +64,7 @@ sbp('sbp/selectors/register', {
 // later on
 sbp('mydomain/foobar', 'hi!')
 
-// prints: selector 'foobar' called with parameters: [ 'hi!' ]
+// prints: selector 'mydomain/foobar' called with parameters: [ 'hi!' ]
 ```
 
 The star selector makes it possible to design transparent APIs that can be used both directly or indirectly (via [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call)), depending on where the API is called from, and other fancy stuff.
