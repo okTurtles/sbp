@@ -8,7 +8,7 @@ SBP has 3 core concepts:
 2. Domains: a group of related selectors.
 3. Filters: functions that can intercept calls to selectors. They can also prevent a selector's function from running by returning `false`.
 
-This file will cover everything, including all built-in selectors, as well as the per-domain selectors that are created for you, of which there is currently only one: `_init`.
+This file will cover everything, including all built-in selectors, as well as special per-domain selectors, of which there are currently two: `_init` and `*`.
 
 - [`'sbp/selectors/register'`](#sbpselectorsregister)
 - [`'sbp/selectors/unregister'`](#sbpselectorsunregister)
@@ -49,6 +49,25 @@ sbp('sbp/selectors/register', {
 sbp('mydomain/say-hello') // prints "hello from: mydomain"
 await sbp('mydomain/async-action') // waits on the database to load
 ```
+
+Finally, SBP supports handling calls to undefined selectors by implementing the **star selector** `<domain>/*`.
+
+The function signature for star selectors is the same as all other selectors, except the first parameter must be the name of the selector being called. If the star selector is defined, any calls to undefined selectors (on that domain) will get passed to the star selector's function along with the name of the selector being called:
+
+```js
+sbp('sbp/selectors/register', {
+  'mydomain/*' (selector, ...args) {
+    console.log(`selector '${selector}' called with parameters:`, args)
+  }
+})
+
+// later on
+sbp('mydomain/foobar', 'hi!')
+
+// prints: selector 'foobar' called with parameters: [ 'hi!' ]
+```
+
+The star selector makes it possible to design transparent APIs that can be used both directly or indirectly (via [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call)), depending on where the API is called from, and other fancy stuff.
 
 ### `'sbp/selectors/unregister'`
 

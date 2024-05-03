@@ -203,6 +203,8 @@ But seriously, you can do stuff with SBP that you couldn't really do in the lang
 
 - Create a firewall for networking, and low-level (or high-level) sandboxing.
 
+- Use the [star selector (`<domain>/*`)](docs/sbp-api.md#sbpselectorsregister) to intercept and dynamically interpet undefined selectors to do things like implementing transparent APIs that can be either [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call) or non-RPC (depending on where you use them).
+
 - You can create a programming language using SBP since everything imaginable can be represented as a string. For example, here we define the primitive JavaScript operator `if` using SBP in JavaScript:
 
   ```js
