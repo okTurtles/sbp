@@ -1,6 +1,7 @@
 language: node_js
+dist: jammy
 node_js:
-  - "16"
+  - "18"
 branches:
   only:
     - master # https://github.com/okTurtles/group-income-simple/issues/58
