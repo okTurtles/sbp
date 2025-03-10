@@ -3,6 +3,7 @@
 #### 2.4.0
 
 - Added `"types"` field to `package.json` for classic TypeScript module resolution.
+- Removed unnecessary dev dependencies (switched from `mocha` to `node:test`)
 
 #### 2.4.0
 

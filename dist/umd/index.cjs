@@ -9,7 +9,7 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.domainFromSelector = void 0;
+    exports.domainFromSelector = domainFromSelector;
     const selectors = Object.create(null);
     const domains = Object.create(null);
     const globalFilters = [];
@@ -58,7 +58,6 @@
         }
         return domainLookup[0];
     }
-    exports.domainFromSelector = domainFromSelector;
     const SBP_BASE_SELECTORS = {
         'sbp/selectors/register': (sels) => {
             const registered = [];
