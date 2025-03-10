@@ -2,6 +2,10 @@
 
 #### 2.4.0
 
+- Added `"types"` field to `package.json` for classic TypeScript module resolution.
+
+#### 2.4.0
+
 - Added support for star selectors (`domain/*`). When defined, the star selector
   will be used as a fallback for undefined selectors. The intended use of this
   feature is implementing domains that use some form of RPC.

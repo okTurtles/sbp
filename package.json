@@ -1,7 +1,8 @@
 {
   "name": "@sbp/sbp",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Selector-based Programming: JavaScript Edition",
+  "types": "dist/umd/index.d.cts",
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",
   "type": "module",
