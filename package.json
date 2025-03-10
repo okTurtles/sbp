@@ -24,7 +24,7 @@
     "build:esm": "tsc --project tsconfig.json --declaration && mv ./dist/esm/index.d.ts ./dist/esm/index.d.mts",
     "build:umd": "tsc --project tsconfig.umd.json --declaration && mv ./dist/umd/index.js ./dist/umd/index.cjs && mv ./dist/umd/index.d.ts ./dist/umd/index.d.cts",
     "build": "npm run build:esm && npm run build:umd",
-    "lint": "eslint",
+    "lint": "eslint .",
     "clean": "rm -f dist/*"
   },
   "browserslist": "> 0.25% and not dead and since 2020",
