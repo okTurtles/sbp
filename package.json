@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/okTurtles/sbp-js",
   "scripts": {
-    "test": "mocha --extension ts --node-option no-warnings=ExperimentalWarning --node-option loader=ts-node/esm -R spec src/**/*.test.ts",
+    "test": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));' src/index.test.ts",
     "build:esm": "tsc --project tsconfig.json --declaration && mv ./dist/esm/index.d.ts ./dist/esm/index.d.mts",
     "build:umd": "tsc --project tsconfig.umd.json --declaration && mv ./dist/umd/index.js ./dist/umd/index.cjs && mv ./dist/umd/index.d.ts ./dist/umd/index.d.cts",
     "build": "npm run build:esm && npm run build:umd",
