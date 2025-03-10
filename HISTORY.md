@@ -1,5 +1,10 @@
 # History
 
+#### 2.4.1
+
+- Added `"types"` field to `package.json` for classic TypeScript module resolution.
+- Removed unnecessary dev dependencies (switched from `mocha` to `node:test`)
+
 #### 2.4.0
 
 - Added support for star selectors (`domain/*`). When defined, the star selector
